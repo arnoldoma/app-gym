@@ -1,7 +1,7 @@
 import React from 'react'
 import { Button, Form, Col } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export const AddForm = ({ handleAdd }) => {
@@ -20,7 +20,7 @@ export const AddForm = ({ handleAdd }) => {
 
     return (
         <>
-            <Col xl={5} className=" m-auto justify-content-center">
+            <Col sm={12} md={6}  lg={6}  xl={4} className=" m-auto justify-content-center">
                 <Form onSubmit={handleSubmit(OnSubmit)}>
                     <h1>Registro de actividades</h1>
                     <br />
@@ -58,9 +58,9 @@ export const AddForm = ({ handleAdd }) => {
                             )}
                         >
                             <option value="">Selecciona una jornada</option>
-                            <option value="Matutina">En la mañana</option>
-                            <option value="Vespertina">En la tarde</option>
-                            <option value="Nocturna">En la noche</option>
+                            <option value="En la mañana">En la mañana</option>
+                            <option value="En la tarde">En la tarde</option>
+                            <option value="En la noche">En la noche</option>
                         </Form.Select>
                         <Form.Text className="text-secondary">
                             {errors?.jornada?.message}
@@ -70,7 +70,7 @@ export const AddForm = ({ handleAdd }) => {
                     <Form.Group className="mb-3" controlId="formBasicText">
                         <Form.Label>Duracion en horas</Form.Label>
                         <Form.Control
-                            type="duracion"
+                            type="number"
                             placeholder="Duración en horas"
                             {...register('duracion',
                                 {
@@ -82,11 +82,12 @@ export const AddForm = ({ handleAdd }) => {
                             {errors?.duracion?.message}
                         </Form.Text>
                     </Form.Group>
+                    
                     {/* Distancia */}
                     <Form.Group className="mb-3" controlId="formBasicText">
-                        <Form.Label>Distancia en metros</Form.Label>
+                        <Form.Label>Distancia en kilometros</Form.Label>
                         <Form.Control
-                            type="distancia"
+                            type="number"
                             placeholder="Distancia recorrido"
                             {...register('distancia',
                                 {
@@ -99,9 +100,12 @@ export const AddForm = ({ handleAdd }) => {
                         </Form.Text>
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" >
-                        Registrar
-                    </Button>
+                    <div className="mb-3 d-flex justify-content-center">
+                        <Button variant="primary" type="submit" >
+                            Registrar
+                        </Button>
+                        <Link to={`/historial`} className="btn btn-danger mx-1" >Cancelar</Link>
+                    </div>
                 </Form>
             </Col>
         </>

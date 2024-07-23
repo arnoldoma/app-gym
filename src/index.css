@@ -11,32 +11,40 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
-header {
-  background-color: var(--primary-color);
-  height: 50px;
-  /* box-shadow: 5px 5px 15px rgba(238, 185, 146, 0.393); */
-}
-.menu-area a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-dark-color);
-  text-decoration: none;
-  height: 70px;
-  font-family: Poppins, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-  font-weight: bold;
-  text-transform: uppercase;
-  padding: 10px;
+
+:root {
+  --primary-color: rgb(197, 208, 227);
+  --dark-color: #000;
+  --secondary-color: rgba(88, 175, 225, 0.675);
+  --text-color: #fff;
+  --text-dark-color: #000;
 }
 
-.menu-area a:hover {
-  /* background-color:var(--secondary-color); */
-  color: var(--text-dark-color);
+header {
+  /* background-color: blue; */
+  height: auto;
+
+  box-shadow: 5px 5px 15px rgba(238, 185, 146, 0.393);
+}
+ol, ul {
+  margin: 0 !important;
+  padding-left: 0 !important;
+}
+
+.nav-app {
+  width: 90%;
+  height: 70px;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .menu-area {
   list-style: none;
   display: flex;
+  align-content: center;
+  margin: auto;
 }
 
 .menu-area li {
@@ -45,8 +53,38 @@ header {
   text-align: center;
 }
 
+.menu-area a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-dark-color);
+  text-decoration: none;
+  font-family: Poppins, 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  height: 70px;
+  padding: 10px;
+}
+
+.menu-area a:hover {
+  /* background-color:var(--secondary-color); */
+  color: var(--text-dark-color);
+}
+
 .activado {
   font-weight: bold;
-  background: var(--secondary-color) !important;
-  color: var(--text-dark-color) !important;
+  background: rgb(236, 236, 228);
+  color: rgb(29, 154, 83);
+}
+.container{
+  margin-top: 50px;
+  background-color: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.grafics{
+  width: 40%;
+  background-color: aliceblue;
+  padding: 30px;
 }

@@ -3,8 +3,6 @@ import { Col, Table } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
 export const ListApp = ({ story, handleDelete, handleEdit }) => {
-
-  console.log(story);
   return (
     <Col>
       <h3 className="text-center">Listado de actividades</h3>
@@ -18,7 +16,7 @@ export const ListApp = ({ story, handleDelete, handleEdit }) => {
             <th>Actividad</th>
             <th>Jornada</th>
             <th>Duración (Horas) </th>
-            <th>Distancia (Metros)</th>
+            <th>Distancia (Kms)</th>
             <th>Acciones</th>
           </tr>
         </thead>

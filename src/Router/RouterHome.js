@@ -1,20 +1,22 @@
 import React, { useEffect, useReducer, useState } from 'react'
-import { BrowserRouter, NavLink, Route, Routes } from 'react-router-dom'
-import { Login } from '../Components/Login'
+import { Route, Routes } from 'react-router-dom'
 import { Dashboard } from '../Components/Dashboard'
 import { ListApp } from '../Components/ListApp'
 import { AddForm } from '../Components/AddForm'
 import { EditForm } from '../Components/EditForm'
 import { ErrorPage } from '../Components/ErrorPage'
 import { gymReducer } from '../Reducers/gymReducers'
+import { NavbarApp } from '../Components/NavbarApp'
 
 const init = () => {
   return JSON.parse(localStorage.getItem("story")) || [];
 }
+
 export const RouterHome = () => {
+
   //Inicializador
   const [story, dispatch] = useReducer(gymReducer, [], init);
-  // Cargar las tareas
+  // Cargar datos
   useEffect(() => {
     localStorage.setItem("story", JSON.stringify(story));
   }, [story]);
@@ -35,7 +37,7 @@ export const RouterHome = () => {
     dispatch(action);
   }
 
-  // *** EDITAR USUARIO ***
+  // *** EDITAR ***
   const [editIndex, setEditIndex] = useState(null);
   const [editStory, setEditStory] = useState({
     id: null,
@@ -49,46 +51,44 @@ export const RouterHome = () => {
     if (editIndex !== null) {
       const data = story.filter(data => data.id === editIndex);
       // Pasamos los valores recibidos para editar
-      setEditStory(
-        {
+      setEditStory({
         id: data[0].id,
         actividad: data[0].actividad,
         jornada: data[0].jornada,
         duracion: data[0].duracion,
         distancia: data[0].distancia
-        });
+      });
     } else {
       setEditStory('');
     }
   }, [editIndex, story]);
 
-  console.log(editStory);
   // Recibo los datos para editar y lo pasamos a setEditName
   const handleEdit = (id) => {
     setEditIndex(id);
   }
-  // *** ACTUALIZAR TAREA ***
+
+  // *** ACTUALIZAR ***
   // Creamos la funcion actualizar y pasamos los parametros id y callback updateUser
   const handleUpdate = (id, updateData) => {
-    console.log( updateData );
-    let data =  {
+    let upData = {
       id: id,
       actividad: updateData.actividad,
       jornada: updateData.jornada,
       duracion: updateData.duracion,
       distancia: updateData.distancia
-      };
+    };
     // Enviamos a reducer
     const action = {
       type: "edit",
-      payload: data
+      payload: upData
     };
     dispatch(action);
     // Resetear index a editar
     setEditIndex(null)
   }
 
-  // *** ELIMINAR TAREA ***
+  // *** ELIMINAR ***
   const handleDelete = id => {
     const action = {
       type: "delete",
@@ -97,43 +97,55 @@ export const RouterHome = () => {
     dispatch(action);
   }
 
+  // Configuracion Grafico de barra
+  const barData = {
+    labels: story.map(stor => stor.actividad ),
+    datasets: [
+      {
+        label: 'Distancia en km',
+        data: story.map(stor => stor.distancia),
+        backgroundcolor: 'blue'
+      },
+      {
+        label: 'Duracion tiempo',
+        data: story.map(stor => stor.duracion),
+        backgroundcolor: 'yellow'
+      }
+    ]
+  };
+
+  // Configuracion Grafico circular
+  const barPie = {
+    labels: story.map(stor => stor.jornada),
+    datasets: [
+      {
+        label: 'Duracion',
+        data: story.map(stor => stor.duracion),
+        backgroundcolor: [
+          'yellow',
+          'red',
+          'ble',
+          'green',
+          'brown'
+        ]
+      }
+    ]
+  };
+
   return (
-    <BrowserRouter>
-      <header >
-        <nav className="container">
-          <ul className="menu-area">
-            <li>
-              <NavLink to="/dashboard"
-                className={({ isActive }) => isActive ? "activado" : ""}
-              >Dashboard</NavLink>
-            </li>
-            <li>
-              <NavLink to="/historial"
-                className={({ isActive }) => isActive ? "activado" : ""}
-              >Actividades</NavLink>
-            </li>
-            <li>
-              <NavLink to="/historial/create"
-                className={({ isActive }) => isActive ? "activado" : ""}
-              >Nuevo registro</NavLink>
-            </li>
-          </ul>
-        </nav>
-      </header>
-      <hr></hr>
-
+    <>
+      <NavbarApp />
       <section className="container">
-
         <Routes>
-          <Route path="/" element={<Login />}></Route>
-
-          <Route path="/dashboard" element={<Dashboard />}></Route>
-          <Route path="/historial" element={<ListApp story={story} handleDelete={handleDelete} handleEdit={handleEdit} />}></Route>
+          <Route path="/dashboard" element={<Dashboard barData={barData} barPie={barPie} />}></Route>
+          <Route path="/historial/*" element={<ListApp story={story} handleDelete={handleDelete} handleEdit={handleEdit} />}></Route>
+          <Route path="/historial/lista" element={<ListApp story={story} handleDelete={handleDelete} handleEdit={handleEdit} />}></Route>
           <Route path="/historial/create" element={<AddForm handleAdd={handleAdd} />}></Route>
           <Route path="/historial/:id" element={<EditForm editStory={editStory} handleUpdate={handleUpdate} />}></Route>
           <Route path="*" element={<ErrorPage />}></Route>
+          <Route path="*" element={<ErrorPage />}></Route>
         </Routes>
       </section>
-    </BrowserRouter>
+    </>
   )
 }

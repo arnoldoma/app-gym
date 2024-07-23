@@ -17,8 +17,6 @@ export const EditForm = ({ editStory, handleUpdate }) => {
     setValue('duracion', editStory.duracion);
     setValue('distancia', editStory.distancia);
 
-
-    console.log(editStory);
     // Obtener registro formulario
     const OnSubmit = (data, e) => {
         // Enviar Datos
@@ -30,7 +28,7 @@ export const EditForm = ({ editStory, handleUpdate }) => {
 
     return (
         <>
-            <Col xl={5} className=" m-auto justify-content-center">
+            <Col sm={12} md={6}  lg={6}  xl={4}  className=" m-auto justify-content-center">
                 <Form onSubmit={handleSubmit(OnSubmit)}>
                     <h1>Actualizar Registro</h1>
                     <br />
@@ -66,9 +64,9 @@ export const EditForm = ({ editStory, handleUpdate }) => {
                             )}
                         >
                             <option>Selecciona una jornada</option>
-                            <option value="Matutina">En la mañana</option>
-                            <option value="Vespertina">En la tarde</option>
-                            <option value="Nocturna">En la noche</option>
+                            <option value="En la mañana">En la mañana</option>
+                            <option value="En la tarde">En la tarde</option>
+                            <option value="En la noche">En la noche</option>
                         </Form.Select>
                         <Form.Text className="text-secondary">
                             {errors?.jornada?.message}
@@ -78,7 +76,7 @@ export const EditForm = ({ editStory, handleUpdate }) => {
                     <Form.Group className="mb-3" controlId="formBasicText">
                         <Form.Label>Duracion en horas</Form.Label>
                         <Form.Control
-                            type="duracion"
+                            type="number"
                             placeholder="Duración en horas"
                             {...register('duracion',
                                 {
@@ -92,9 +90,9 @@ export const EditForm = ({ editStory, handleUpdate }) => {
                     </Form.Group>
                     {/* Distancia */}
                     <Form.Group className="mb-3" controlId="formBasicText">
-                        <Form.Label>Distancia en metros</Form.Label>
+                        <Form.Label>Distancia en kilometros</Form.Label>
                         <Form.Control
-                            type="distancia"
+                            type="number"
                             placeholder="Distancia recorrido"
                             {...register('distancia',
                                 {
@@ -107,10 +105,12 @@ export const EditForm = ({ editStory, handleUpdate }) => {
                         </Form.Text>
                     </Form.Group>
 
-                    <Button variant="primary" type="submit" >
+                    <div className="mb-3 d-flex justify-content-center">
+                        <Button variant="primary" type="submit" >
                         Actualizar
-                    </Button>
-                    <Link to={`/historial`} className="btn btn-danger mx-1" >Cancelar</Link>
+                        </Button>
+                        <Link to={`/historial`} className="btn btn-danger mx-1" >Cancelar</Link>
+                    </div>
                 </Form>
             </Col>
         </>
